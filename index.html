@@ -21,6 +21,8 @@
       --text:      #111111;
       --dim:       #555555;
       --dimmer:    #888888;
+      --acc2:      #c47a00;
+      --acc2-light: rgba(196,122,0,0.12);
       --font-heading: 'Rubik', sans-serif;
       --font-body:    'Inter', sans-serif;
       --font-sub:     'Inter Tight', sans-serif;
@@ -47,6 +49,7 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
 
+    /* ── HEADER ── */
     header {
       padding: 20px 20px 16px;
       border-bottom: 1px solid var(--border);
@@ -82,8 +85,8 @@
       width: 9px; height: 9px; border-radius: 50%;
       background: var(--dimmer); flex-shrink: 0; transition: background 0.4s;
     }
-    .pulse.active  { background: #3da820;   animation: breathe 1.8s ease-in-out infinite; }
-    .pulse.running { background: #c4a800;   animation: breathe 0.7s ease-in-out infinite; }
+    .pulse.active  { background: #3da820; animation: breathe 1.8s ease-in-out infinite; }
+    .pulse.running { background: #c4a800; animation: breathe 0.7s ease-in-out infinite; }
     .pulse.error   { background: #cc2222; }
     @keyframes breathe {
       0%, 100% { opacity: 1; }
@@ -95,12 +98,14 @@
       letter-spacing: 0.08em; color: var(--text);
     }
 
+    /* ── MAIN ── */
     main {
       flex: 1; padding: 20px;
       display: flex; flex-direction: column;
       gap: 20px; overflow-y: auto;
     }
 
+    /* ── SECTION HEADERS ── */
     .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: -4px; }
     .section-header .line { flex: 1; height: 1px; background: var(--border); }
     .section-title {
@@ -110,6 +115,26 @@
       color: var(--dimmer); white-space: nowrap;
     }
 
+    /* ── ACCOUNT LABEL BADGE ── */
+    .account-badge {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .account-badge .ab-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%; flex-shrink: 0;
+    }
+    .ab-dot.a1 { background: var(--electric2); }
+    .ab-dot.a2 { background: var(--acc2); }
+    .account-badge .ab-name {
+      font-family: var(--font-sub);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    /* ── STATS ── */
     .stats-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -161,6 +186,7 @@
     .refresh-btn.spinning svg { animation: spin 0.6s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── RUN BUTTONS ── */
     .run-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -173,24 +199,37 @@
       gap: 16px; transition: background 0.15s; position: relative;
     }
     .run-btn + .run-btn { border-top: 1px solid var(--border); }
-    .run-btn:active { background: rgba(94,16,188,0.12); }
+    .run-btn:active { background: rgba(94,16,188,0.08); }
     .run-btn::after {
       content: ''; position: absolute;
       left: 0; top: 0; bottom: 0; width: 3px;
       background: var(--electric); opacity: 0; transition: opacity 0.15s;
     }
     .run-btn:active::after { opacity: 1; }
+    .run-btn.a2:active { background: var(--acc2-light); }
+    .run-btn.a2::after { background: var(--acc2); }
+
     .run-icon {
       width: 46px; height: 46px; border-radius: 12px;
-      background: rgba(94,16,188,0.15);
-      border: 1px solid rgba(94,16,188,0.4);
+      background: rgba(94,16,188,0.12);
+      border: 1px solid rgba(94,16,188,0.35);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; color: var(--electric2);
     }
     .run-icon.green {
-      background: rgba(128,229,92,0.1);
-      border-color: rgba(128,229,92,0.3);
+      background: rgba(61,168,32,0.1);
+      border-color: rgba(61,168,32,0.3);
       color: var(--neon);
+    }
+    .run-icon.a2 {
+      background: rgba(196,122,0,0.1);
+      border-color: rgba(196,122,0,0.35);
+      color: var(--acc2);
+    }
+    .run-icon.a2-green {
+      background: rgba(196,122,0,0.08);
+      border-color: rgba(196,122,0,0.25);
+      color: var(--acc2);
     }
     .run-icon svg { width: 20px; height: 20px; }
     .run-text { text-align: left; flex: 1; min-width: 0; }
@@ -206,6 +245,7 @@
     }
     .run-chevron { color: var(--dimmer); flex-shrink: 0; }
 
+    /* ── POLLING GRID ── */
     .poll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .poll-btn {
       background: var(--surface);
@@ -230,14 +270,15 @@
       font-size: 11px; color: var(--dim);
       display: block; font-weight: 300; line-height: 1.4;
     }
+    /* Account 1 arm/kill */
     .poll-btn.arm-phone { border-color: rgba(126,84,217,0.3); }
-    .poll-btn.arm-phone .pb-icon { background: rgba(126,84,217,0.15); color: var(--electric2); }
+    .poll-btn.arm-phone .pb-icon { background: rgba(126,84,217,0.12); color: var(--electric2); }
     .poll-btn.arm-phone .pb-name { color: var(--electric2); }
-    .poll-btn.arm-phone:active { border-color: var(--electric2); background: rgba(126,84,217,0.08); }
-    .poll-btn.arm-email { border-color: rgba(128,229,92,0.25); }
-    .poll-btn.arm-email .pb-icon { background: rgba(128,229,92,0.1); color: var(--neon); }
+    .poll-btn.arm-phone:active { border-color: var(--electric2); background: rgba(126,84,217,0.06); }
+    .poll-btn.arm-email { border-color: rgba(61,168,32,0.25); }
+    .poll-btn.arm-email .pb-icon { background: rgba(61,168,32,0.1); color: var(--neon); }
     .poll-btn.arm-email .pb-name { color: var(--neon); }
-    .poll-btn.arm-email:active { border-color: var(--neon); background: rgba(128,229,92,0.07); }
+    .poll-btn.arm-email:active { border-color: var(--neon); background: rgba(61,168,32,0.06); }
     .poll-btn.kill-phone { border-color: rgba(180,30,30,0.2); }
     .poll-btn.kill-phone .pb-icon { background: rgba(180,30,30,0.08); color: #cc2222; }
     .poll-btn.kill-phone .pb-name { color: #cc2222; }
@@ -246,7 +287,25 @@
     .poll-btn.kill-email .pb-icon { background: rgba(180,30,30,0.08); color: #cc2222; }
     .poll-btn.kill-email .pb-name { color: #cc2222; }
     .poll-btn.kill-email:active { border-color: #cc2222; background: rgba(180,30,30,0.05); }
+    /* Account 2 arm/kill */
+    .poll-btn.arm-phone-2 { border-color: rgba(196,122,0,0.3); }
+    .poll-btn.arm-phone-2 .pb-icon { background: rgba(196,122,0,0.1); color: var(--acc2); }
+    .poll-btn.arm-phone-2 .pb-name { color: var(--acc2); }
+    .poll-btn.arm-phone-2:active { border-color: var(--acc2); background: rgba(196,122,0,0.06); }
+    .poll-btn.arm-email-2 { border-color: rgba(196,122,0,0.3); }
+    .poll-btn.arm-email-2 .pb-icon { background: rgba(196,122,0,0.1); color: var(--acc2); }
+    .poll-btn.arm-email-2 .pb-name { color: var(--acc2); }
+    .poll-btn.arm-email-2:active { border-color: var(--acc2); background: rgba(196,122,0,0.06); }
+    .poll-btn.kill-phone-2 { border-color: rgba(180,30,30,0.2); }
+    .poll-btn.kill-phone-2 .pb-icon { background: rgba(180,30,30,0.08); color: #cc2222; }
+    .poll-btn.kill-phone-2 .pb-name { color: #cc2222; }
+    .poll-btn.kill-phone-2:active { border-color: #cc2222; background: rgba(180,30,30,0.05); }
+    .poll-btn.kill-email-2 { border-color: rgba(180,30,30,0.2); }
+    .poll-btn.kill-email-2 .pb-icon { background: rgba(180,30,30,0.08); color: #cc2222; }
+    .poll-btn.kill-email-2 .pb-name { color: #cc2222; }
+    .poll-btn.kill-email-2:active { border-color: #cc2222; background: rgba(180,30,30,0.05); }
 
+    /* ── KILL ALL BUTTON ── */
     .kill-all-btn {
       width: 100%; background: var(--surface);
       border: 1px solid rgba(180,30,30,0.2);
@@ -274,6 +333,7 @@
     }
     .kill-all-btn:active { border-color: #cc2222; background: rgba(180,30,30,0.05); }
 
+    /* ── LOG ── */
     .log-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -302,6 +362,7 @@
     #logOutput::-webkit-scrollbar { width: 3px; }
     #logOutput::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
+    /* ── TOAST ── */
     #toast {
       position: fixed;
       bottom: calc(28px + env(safe-area-inset-bottom));
@@ -320,6 +381,7 @@
     #toast.warn { border-color: #cc2222;          color: #cc2222; }
     #toast.info { border-color: var(--electric2); color: var(--electric2); }
 
+    /* ── MODALS ── */
     .modal-bg {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.85);
@@ -397,6 +459,7 @@
 
   <main>
 
+    <!-- STATS -->
     <div class="stats-card">
       <div class="stats-row-label">
         <span class="dot phone-dot"></span>
@@ -443,6 +506,7 @@
       </div>
     </div>
 
+    <!-- RUN HYGIENE — ACCOUNT 1 -->
     <div>
       <div class="section-header">
         <span class="section-title">Run Hygiene</span>
@@ -450,38 +514,79 @@
       </div>
     </div>
     <div class="run-card">
-      <button class="run-btn" onclick="confirmWake('all')">
+      <div class="account-badge">
+        <span class="ab-dot a1"></span>
+        <span class="ab-name">Jared's Account</span>
+      </div>
+      <button class="run-btn" onclick="confirmWake('all', 1)">
         <div class="run-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
         <div class="run-text">
           <div class="run-name">Wake Up — Both</div>
-          <div class="run-desc">Runs a full phone + email hygiene cycle immediately. If it exceeds the 5-min limit, polling triggers are created automatically to continue.</div>
+          <div class="run-desc">Runs a full phone + email hygiene cycle on Jared's Account immediately.</div>
         </div>
         <div class="run-chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
       </button>
-      <button class="run-btn" onclick="confirmWake('phone')">
+      <button class="run-btn" onclick="confirmWake('phone', 1)">
         <div class="run-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         </div>
         <div class="run-text">
           <div class="run-name">Phone Only</div>
-          <div class="run-desc">Validates cell, home, and work numbers via EmailOversight for SMS campaigns. Sends results to Convergence on completion.</div>
+          <div class="run-desc">SMS phone hygiene on Jared's Account. Validates numbers and sends results to Convergence.</div>
         </div>
         <div class="run-chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
       </button>
-      <button class="run-btn" onclick="confirmWake('email')">
+      <button class="run-btn" onclick="confirmWake('email', 1)">
         <div class="run-icon green">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
         <div class="run-text">
           <div class="run-name">Email Only</div>
-          <div class="run-desc">Validates email addresses via EmailOversight for email campaigns. Assigns Contact IDs and fires completion notifications when done.</div>
+          <div class="run-desc">Email hygiene on Jared's Account. Validates addresses, assigns Contact IDs, fires completion notifications.</div>
+        </div>
+        <div class="run-chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+      </button>
+
+      <!-- ACCOUNT 2 -->
+      <div class="account-badge" style="border-top:1px solid var(--border);">
+        <span class="ab-dot a2"></span>
+        <span class="ab-name">Convergence Fulfillment</span>
+      </div>
+      <button class="run-btn a2" onclick="confirmWake('all', 2)">
+        <div class="run-icon a2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="run-text">
+          <div class="run-name">Wake Up — Both</div>
+          <div class="run-desc">Runs a full phone + email hygiene cycle on Convergence Fulfillment immediately.</div>
+        </div>
+        <div class="run-chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+      </button>
+      <button class="run-btn a2" onclick="confirmWake('phone', 2)">
+        <div class="run-icon a2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="run-text">
+          <div class="run-name">Phone Only</div>
+          <div class="run-desc">SMS phone hygiene on Convergence Fulfillment. Validates numbers and sends results to Convergence.</div>
+        </div>
+        <div class="run-chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+      </button>
+      <button class="run-btn a2" onclick="confirmWake('email', 2)">
+        <div class="run-icon a2-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="run-text">
+          <div class="run-name">Email Only</div>
+          <div class="run-desc">Email hygiene on Convergence Fulfillment. Validates addresses, assigns Contact IDs, fires completion notifications.</div>
         </div>
         <div class="run-chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
       </button>
     </div>
 
+    <!-- POLLING TRIGGERS -->
     <div>
       <div class="section-header">
         <span class="section-title">Polling Triggers</span>
@@ -489,47 +594,74 @@
       </div>
     </div>
 
-    <div class="poll-grid">
-      <button class="poll-btn arm-phone" onclick="handleArm('phone')">
-        <div class="pb-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
+    <!-- Account 1 polling -->
+    <div class="account-badge" style="background:var(--surface);border:1px solid var(--border);border-radius:14px 14px 0 0;border-bottom:none;padding:10px 14px 6px;">
+      <span class="ab-dot a1"></span>
+      <span class="ab-name">Jared's Account</span>
+    </div>
+    <div class="poll-grid" style="margin-top:0;">
+      <button class="poll-btn arm-phone" style="border-radius:0 0 0 0;border-top:none;" onclick="handleArm('phone', 1)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <span class="pb-name">Arm Phone</span>
-        <span class="pb-desc">Creates a 5-min background trigger that auto-processes SMS campaigns</span>
+        <span class="pb-desc">5-min trigger for SMS campaigns</span>
       </button>
-      <button class="poll-btn arm-email" onclick="handleArm('email')">
-        <div class="pb-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
+      <button class="poll-btn arm-email" style="border-radius:0 0 0 0;border-top:none;" onclick="handleArm('email', 1)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <span class="pb-name">Arm Email</span>
-        <span class="pb-desc">Creates a 5-min background trigger that auto-processes email campaigns</span>
+        <span class="pb-desc">5-min trigger for email campaigns</span>
       </button>
-      <button class="poll-btn kill-phone" onclick="confirmKill('phone')">
-        <div class="pb-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-        </div>
+      <button class="poll-btn kill-phone" style="border-top:none;" onclick="confirmKill('phone', 1)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
         <span class="pb-name">Kill Phone</span>
-        <span class="pb-desc">Removes the phone polling trigger. Current run finishes but no further auto-runs occur</span>
+        <span class="pb-desc">Remove phone polling trigger</span>
       </button>
-      <button class="poll-btn kill-email" onclick="confirmKill('email')">
-        <div class="pb-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-        </div>
+      <button class="poll-btn kill-email" style="border-top:none;" onclick="confirmKill('email', 1)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
         <span class="pb-name">Kill Email</span>
-        <span class="pb-desc">Removes the email polling trigger. Current run finishes but no further auto-runs occur</span>
+        <span class="pb-desc">Remove email polling trigger</span>
       </button>
     </div>
 
-    <button class="kill-all-btn" onclick="confirmKill('all')">
+    <!-- Account 2 polling -->
+    <div class="account-badge" style="background:var(--surface);border:1px solid var(--border);border-radius:14px 14px 0 0;border-bottom:none;padding:10px 14px 6px;margin-top:-8px;">
+      <span class="ab-dot a2"></span>
+      <span class="ab-name">Convergence Fulfillment</span>
+    </div>
+    <div class="poll-grid" style="margin-top:0;">
+      <button class="poll-btn arm-phone-2" style="border-radius:0 0 0 0;border-top:none;" onclick="handleArm('phone', 2)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="pb-name">Arm Phone</span>
+        <span class="pb-desc">5-min trigger for SMS campaigns</span>
+      </button>
+      <button class="poll-btn arm-email-2" style="border-radius:0 0 0 0;border-top:none;" onclick="handleArm('email', 2)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="pb-name">Arm Email</span>
+        <span class="pb-desc">5-min trigger for email campaigns</span>
+      </button>
+      <button class="poll-btn kill-phone-2" style="border-top:none;" onclick="confirmKill('phone', 2)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+        <span class="pb-name">Kill Phone</span>
+        <span class="pb-desc">Remove phone polling trigger</span>
+      </button>
+      <button class="poll-btn kill-email-2" style="border-top:none;" onclick="confirmKill('email', 2)">
+        <div class="pb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+        <span class="pb-name">Kill Email</span>
+        <span class="pb-desc">Remove email polling trigger</span>
+      </button>
+    </div>
+
+    <!-- Kill All -->
+    <button class="kill-all-btn" onclick="confirmKill('all', 0)">
       <div class="ka-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
       </div>
       <div class="ka-text">
         <span class="ka-name">Kill All Triggers</span>
-        <span class="ka-desc">Removes both phone and email polling triggers simultaneously</span>
+        <span class="ka-desc">Removes all phone and email polling triggers on both accounts</span>
       </div>
     </button>
 
+    <!-- LOG -->
     <div>
       <div class="section-header">
         <span class="section-title">Execution Log</span>
@@ -538,7 +670,7 @@
     </div>
     <div class="log-card">
       <div class="log-header">
-        <span class="log-title">Recent Activity</span>
+        <span class="log-title">Recent Activity — Jared's Account</span>
       </div>
       <div id="logOutput"><span class="log-dim">// tap refresh to load status</span></div>
     </div>
@@ -548,6 +680,7 @@
 
 <div id="toast"></div>
 
+<!-- MODAL: WAKE -->
 <div class="modal-bg" id="modalWake">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -560,6 +693,7 @@
   </div>
 </div>
 
+<!-- MODAL: KILL -->
 <div class="modal-bg" id="modalKill">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -574,11 +708,16 @@
 
 <script>
   // ── CONFIG ──────────────────────────────────────
-  var GAS_URL = 'https://script.google.com/macros/s/AKfycbxMzRVKgBqvqbHaj53MvO9CSCiI4c3Qr9iIaRi0vCcQZXfw4_kRNHJnzVBEMsGBGbYwxw/exec';
+  var GAS_URL_1 = 'https://script.google.com/macros/s/AKfycbxMzRVKgBqvqbHaj53MvO9CSCiI4c3Qr9iIaRi0vCcQZXfw4_kRNHJnzVBEMsGBGbYwxw/exec';
+  var GAS_URL_2 = 'https://script.google.com/macros/s/AKfycbz_ikHJkA2YT7IcWvOmgN0Z29mCuWgsGcFt8t6DRoqzyhqrVT-XLhm-w-2qFrIcpQBFPA/exec';
+
+  function gasUrl(account) {
+    return account === 2 ? GAS_URL_2 : GAS_URL_1;
+  }
 
   // ── API CALL ─────────────────────────────────────
-  function callGAS(action, onSuccess, onError) {
-    fetch(GAS_URL + '?action=' + action)
+  function callGAS(action, account, onSuccess, onError) {
+    fetch(gasUrl(account) + '?action=' + action)
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.error) { if (onError) onError(data.error); }
@@ -590,7 +729,9 @@
   // ── STATE ─────────────────────────────────────────
   var _lastRunTime = null;
   var _pendingWake = null;
+  var _pendingWakeAccount = 1;
   var _pendingKill = null;
+  var _pendingKillAccount = 1;
 
   // ── MODALS ────────────────────────────────────────
   function openModal(id)  { document.getElementById(id).classList.add('open'); }
@@ -646,7 +787,8 @@
   function fetchStatus() {
     var btn = document.getElementById('refreshBtn');
     btn.classList.add('spinning');
-    callGAS('getStatus', function(data) {
+    // Always fetch status from account 1 for the stats panel
+    callGAS('getStatus', 1, function(data) {
       btn.classList.remove('spinning');
       document.getElementById('statPhoneRemaining').textContent = data.phoneRemaining >= 0 ? data.phoneRemaining : '?';
       document.getElementById('statPhoneTrigger').textContent   = data.phoneTriggerActive ? 'ON' : 'OFF';
@@ -670,26 +812,28 @@
 
   // ── WAKE UP ───────────────────────────────────────
   var wakeTitles = { all: 'Run Phone + Email?', phone: 'Run Phone Hygiene?', email: 'Run Email Hygiene?' };
-  var wakeBodies = {
-    all:   'Kicks off a full phone + email hygiene cycle immediately.',
-    phone: 'Runs SMS phone hygiene only — validates numbers and sends results to Convergence.',
-    email: 'Runs email hygiene only — validates addresses, assigns Contact IDs, fires completion notifications.'
-  };
   var wakeActions = { all: 'wakeUpAll', phone: 'wakeUpPhone', email: 'wakeUpEmail' };
+  var accountNames = { 1: "Jared's Account", 2: 'Convergence Fulfillment' };
 
-  function confirmWake(target) {
+  function confirmWake(target, account) {
     _pendingWake = target;
+    _pendingWakeAccount = account;
     document.getElementById('mWakeTitle').textContent = wakeTitles[target];
-    document.getElementById('mWakeBody').textContent  = wakeBodies[target];
+    document.getElementById('mWakeBody').textContent =
+      'Run on ' + accountNames[account] + '. ' +
+      (target === 'all' ? 'Kicks off a full phone + email hygiene cycle immediately.' :
+       target === 'phone' ? 'Validates numbers and sends results to Convergence on completion.' :
+       'Validates addresses, assigns Contact IDs, fires completion notifications.');
     openModal('modalWake');
   }
 
   function execWake() {
     var target = _pendingWake;
+    var account = _pendingWakeAccount;
     closeModal('modalWake');
     setStatus('RUNNING', 'running');
-    showToast('Starting ' + target + ' hygiene…', 'info');
-    callGAS(wakeActions[target], function() {
+    showToast('Starting on ' + accountNames[account] + '…', 'info');
+    callGAS(wakeActions[target], account, function() {
       showToast('Cycle started', 'ok');
       _lastRunTime = new Date();
       document.getElementById('statLast').textContent = 'now';
@@ -703,41 +847,59 @@
   // ── ARM POLLING ───────────────────────────────────
   var armActions = { phone: 'armPhone', email: 'armEmail' };
 
-  function handleArm(target) {
-    showToast('Arming ' + target + ' polling…', 'info');
-    callGAS(armActions[target], function() {
-      showToast((target === 'phone' ? 'Phone' : 'Email') + ' polling armed', 'ok');
-      document.getElementById(target === 'phone' ? 'statPhoneTrigger' : 'statEmailTrigger').textContent = 'ON';
-      setStatus('POLLING', 'active');
+  function handleArm(target, account) {
+    showToast('Arming ' + target + ' on ' + accountNames[account] + '…', 'info');
+    callGAS(armActions[target], account, function() {
+      showToast((target === 'phone' ? 'Phone' : 'Email') + ' polling armed on ' + accountNames[account], 'ok');
+      if (account === 1) {
+        document.getElementById(target === 'phone' ? 'statPhoneTrigger' : 'statEmailTrigger').textContent = 'ON';
+        setStatus('POLLING', 'active');
+      }
     }, function(err) { showToast('Failed: ' + err, 'warn'); });
   }
 
   // ── KILL POLLING ──────────────────────────────────
-  var killTitles = { phone: 'Kill Phone Trigger?', email: 'Kill Email Trigger?', all: 'Kill All Triggers?' };
-  var killBodies = {
-    phone: 'Removes the phone hygiene background trigger. Any current run will finish but no further auto-runs will occur.',
-    email: 'Removes the email hygiene background trigger. Any current run will finish but no further auto-runs will occur.',
-    all:   'Removes both phone and email background triggers. No further automatic processing until re-armed.'
-  };
   var killActions = { phone: 'killPhone', email: 'killEmail', all: 'killAll' };
 
-  function confirmKill(target) {
+  function confirmKill(target, account) {
     _pendingKill = target;
-    document.getElementById('mKillTitle').textContent = killTitles[target];
-    document.getElementById('mKillBody').textContent  = killBodies[target];
+    _pendingKillAccount = account;
+    var scope = account === 0 ? 'both accounts' : accountNames[account];
+    document.getElementById('mKillTitle').textContent =
+      target === 'all' ? 'Kill All Triggers?' :
+      'Kill ' + (target === 'phone' ? 'Phone' : 'Email') + ' Trigger?';
+    document.getElementById('mKillBody').textContent =
+      target === 'all'
+        ? 'Removes all phone and email polling triggers on ' + scope + '. No further automatic processing until re-armed.'
+        : 'Removes the ' + target + ' polling trigger on ' + scope + '. Any current run will finish but no further auto-runs will occur.';
     openModal('modalKill');
   }
 
   function execKill() {
     var target = _pendingKill;
+    var account = _pendingKillAccount;
     closeModal('modalKill');
-    showToast('Killing ' + target + ' trigger…', 'warn');
-    callGAS(killActions[target], function() {
-      showToast('Trigger killed', 'warn');
-      if (target === 'phone' || target === 'all') document.getElementById('statPhoneTrigger').textContent = 'OFF';
-      if (target === 'email' || target === 'all') document.getElementById('statEmailTrigger').textContent = 'OFF';
-      setTimeout(fetchStatus, 1000);
-    }, function(err) { showToast('Failed: ' + err, 'warn'); });
+    showToast('Killing trigger…', 'warn');
+
+    if (account === 0) {
+      // Kill all on both accounts
+      callGAS('killAll', 1, function() {}, function() {});
+      callGAS('killAll', 2, function() {
+        showToast('All triggers killed', 'warn');
+        document.getElementById('statPhoneTrigger').textContent = 'OFF';
+        document.getElementById('statEmailTrigger').textContent = 'OFF';
+        setTimeout(fetchStatus, 1000);
+      }, function(err) { showToast('Failed: ' + err, 'warn'); });
+    } else {
+      callGAS(killActions[target], account, function() {
+        showToast('Trigger killed on ' + accountNames[account], 'warn');
+        if (account === 1) {
+          if (target === 'phone' || target === 'all') document.getElementById('statPhoneTrigger').textContent = 'OFF';
+          if (target === 'email' || target === 'all') document.getElementById('statEmailTrigger').textContent = 'OFF';
+        }
+        setTimeout(fetchStatus, 1000);
+      }, function(err) { showToast('Failed: ' + err, 'warn'); });
+    }
   }
 
   // ── INIT ──────────────────────────────────────────
